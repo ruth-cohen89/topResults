@@ -1,5 +1,6 @@
-const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const app = require('./app');
+const mysql = require('mysql');
 
 // Synchronous exeptions on the app
 process.on('uncaughtException', (err) => {
@@ -10,24 +11,32 @@ process.on('uncaughtException', (err) => {
 
 dotenv.config({ path: './config.env' });
 
-const app = require('./app');
+const db = mysql.createConnection({
+  host     : 'localhost',
+  user     : 'root',
+  password : '123456'
+});
 
-const DB = process.env.DATABASE.replace(
-  '<PASSWORD>',
-  process.env.DATABASE_PASSWORD
-);
+db.connect((err) => {
+  if (err) {
+    throw err;
+  }
+  console.log('MySql Connected...');
+});
 
-mongoose
-  .connect(DB, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => console.log('Connected to DB 🙂'));
-
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 
 const server = app.listen(port, () => {
   console.log(`App running on port ${port}...`);
+});
+
+app.get('/createdb', (req, res) => {
+  let sql = 'CREATE DATABASE nodemysql';
+  db.query(sql, (err, result) => {
+    if (err) throw err;
+    console.log('error connecting to db: ', result);
+    res.send('Database created...');
+  });
 });
 
 // Promise rejections (outside of the app)
