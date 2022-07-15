@@ -18,41 +18,36 @@ db.connect((err) => {
   console.log('MySql Connected...');
 });
 
-if (process.env.NODE_ENV === 'development') {
-  app.use(morgan('dev'));
+const createDB = () => {
+  let sql = 'CREATE DATABASE top_scores';
+  db.query(sql, (err, result) => {
+    if (err) throw err;
+    console.log('error connecting to db: ', result);
+  });
 }
 
-app.use(express.urlencoded({ extended: true, limit: '10kb' }));//?
-// app.use((req, res, next) => {
-//   req.requestTime = new Date().toISOString();
-//   next();
-// });
-
-let sql = 'CREATE DATABASE top_scores';
-
-db.query(sql, (err, result) => {
-  if (err) throw err;
-  console.log('error connecting to db: ', result);
-  res.send('Database created...');
-});
-
-
-let sql = 'CREATE TABLE Users(id int AUTO_INCREMENT, userName VARCHAR(255) UNIQUE, FirstName VARCHAR(255), PRIMARY KEY (id))';
-db.query(sql, (err, result) => {
-  if(err) throw err; 
-  console.log(result);
-  res.send('Users table created...');
-});
-
-app.get('/createscorestable', (req, res) => {
-  let sql = 'CREATE TABLE Scores(id int AUTO_INCREMENT, userName varchar(255) UNIQUE, FirstName varchar(255), PRIMARY KEY (id))';
+const createUsersTable = () => {
+  let sql = 'CREATE TABLE Users(id int AUTO_INCREMENT, userName VARCHAR(255) UNIQUE, FirstName VARCHAR(255), PRIMARY KEY (id))';
   
   db.query(sql, (err, result) => {
     if(err) throw err; 
     console.log(result);
-    res.status('Users table created...');
   });
-});
+}
+
+const createTopScoresTable = () => {
+  let sql = 'CREATE TABLE Scores(id int AUTO_INCREMENT, userName varchar(255), game varchar(255) UNIQUE, PRIMARY KEY (id))';
+  
+  db.query(sql, (err, result) => {
+    if(err) throw err; 
+    console.log(result);
+  });
+};
+
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
+app.use(express.urlencoded({ extended: true, limit: '10kb' }));//?
 
 app.post('/adduser', (req, res) => {
   let user = {userName:req.body.userName, firstName:req.body.firstName}
@@ -88,4 +83,5 @@ app.all('*', (req, res, next) => {
 });
 
 app.use(globalErrorHandler);
+createTopScoresTable()
 module.exports = app;
