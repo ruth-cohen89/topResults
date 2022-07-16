@@ -38,7 +38,7 @@ const createUsersTable = () => {
 
 const createTopScoresTable = () => {
   let sql =
-    'CREATE TABLE scores(id int AUTO_INCREMENT, userName varchar(255) NOT NULL, game varchar(255) NOT NULL, score varchar(255) NOT NULL, PRIMARY KEY (id))';
+    'CREATE TABLE scores(id int AUTO_INCREMENT, userName varchar(255) NOT NULL, game varchar(255) NOT NULL, score int NOT NULL, PRIMARY KEY (id), foreign key(userName) references users(userName))';
 
   db.query(sql, (err, result) => {
     if (err) throw err;
@@ -65,10 +65,13 @@ app.post('/adduser', (req, res) => {
   db.query(sql, user, (err, result) => {
     if (err) {
       console.log(err);
-      if (err.errno === 1062) {
-        return res.send('User name already exits, please choose another one.');
-      } 
-      return res.send('ERROR, Couldn\'t process your request ')
+      if (err) {
+        console.log(err);
+        return res.status(400).json({
+          status: 'client error',        
+          message: err.sqlMessage
+        });
+      }
     }
 
     res.status(201).json({
@@ -106,21 +109,21 @@ app.post('/submit', (req, res) => {
       db.query(sql, score, (err, result) => {
         if (err) {
           console.log(err);
-          let message;
-          if (err.errno === 1048) message = 'Error, please fill in userName'
-          return res.status(400).json({
-            status: 'client error',
-            
-            message: `Your highest score is ${result[0].score}`,
+          return res.status(422).json({
+            status: 'client error',        
           });
         }
       });
     }
+
     sql = 'INSERT INTO scores SET ?;';
     db.query(sql, score, (err, result) => {
       if (err) {
         console.log(err);
-
+        return res.status(400).json({
+          status: 'client error',        
+          message: err.sqlMessage
+        });
       }
 
       res.status(201).json({
@@ -131,6 +134,39 @@ app.post('/submit', (req, res) => {
       });
     });
   });
+});
+
+app.get('/top-scores', (req, res) => {
+  if (!req.query.game || !req.query.limit || !req.query.userName) return res.status(400).json({message: 'Missing fields'});
+  let sql = `(SELECT score, userName from scores WHERE game='${req.query.game}' ORDER BY score DESC LIMIT ${req.query.limit}) UNION SELECT score, userName from scores WHERE game='${req.query.game}' AND userName='${req.query.userName}'`;
+  db.query(sql, (err, result) => {
+      if (err) {
+        console.log(err);
+        return res.status(400).json({
+          status: 'client error',        
+          message: err.sqlMessage
+        });
+      }
+    let userScore = result.find(score => score.userName === req.query.userName);
+    sql = `SELECT COUNT(*) from scores WHERE game='${req.query.game}' AND score>'${userScore.score}'`;
+    db.query(sql, (err, result2) => {
+      if (err) {
+        console.log(err);
+        if (err) {
+          console.log(err);
+          return res.status(400).json({
+            status: 'client error',        
+            message: err.sqlMessage
+          });
+        }
+      }
+      
+    res.status(200).json({
+      status: 'success',
+      data: {[`top ${req.query.limit}`]: result, [`${req.query.userName} place`]: result2[0]["COUNT(*)"]+1}
+    });
+  });
+})
 });
 
 app.all('*', (req, res, next) => {
