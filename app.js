@@ -150,6 +150,15 @@ app.get('/top-scores', async (req, res) => {
   });
 });
 
+app.patch('/updateuser/:id', async (req, res) => {
+  let sql = `UPDATE users SET fullName = '${req.body.fullName}' WHERE id = ${req.params.id}`;
+  let result = await db.query(sql, res);
+  res.status(200).json({
+    status: 'success',
+    data: result
+  });
+});
+
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server 🙄`, 404));
 });
