@@ -52,6 +52,30 @@ const createTopScoresTable = () => {
   });
 };
 
+const postDbQuery = (sql, data) => {
+
+  db.query(sql, data, (err, result) => {
+      if (err) {
+        console.log(err);
+        return res.status(400).json({
+          status: 'client error',        
+          message: err.sqlMessage
+        });
+      }
+
+    res.status(201).json({
+      status: 'success',
+      data: {
+        data: result,
+      },
+    });
+  });
+};
+
+const getDbQuery = (sql) => {
+
+}
+
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
@@ -63,15 +87,13 @@ app.post('/adduser', (req, res) => {
   let sql = 'INSERT INTO users SET ?';
 
   db.query(sql, user, (err, result) => {
+
     if (err) {
       console.log(err);
-      if (err) {
-        console.log(err);
-        return res.status(400).json({
-          status: 'client error',        
-          message: err.sqlMessage
-        });
-      }
+      return res.status(400).json({
+        status: 'client error',        
+        message: err.sqlMessage
+      });
     }
 
     res.status(201).json({
@@ -91,8 +113,7 @@ app.post('/submit', (req, res) => {
   };
 
   let sql = `SELECT score FROM scores WHERE userName='${score.userName}' AND game='${score.game}'`;
-  db.query(sql, (err, result) => {
-    console.log('result:', result, result.length > 0);
+  db.query(sql, (err, result) => { 
     if (err) console.log(err);
     if (result.length > 0 && result[0].score >= score.score) {
       return res.status(200).json({
@@ -138,7 +159,8 @@ app.post('/submit', (req, res) => {
 
 app.get('/top-scores', (req, res) => {
   if (!req.query.game || !req.query.limit || !req.query.userName) return res.status(400).json({message: 'Missing fields'});
-  let sql = `(SELECT score, userName from scores WHERE game='${req.query.game}' ORDER BY score DESC LIMIT ${req.query.limit}) UNION SELECT score, userName from scores WHERE game='${req.query.game}' AND userName='${req.query.userName}'`;
+  let sql = `(SELECT score, userName from scores WHERE game='${req.query.game}' ORDER BY score DESC LIMIT ${req.query.limit}); SELECT score, userName from scores WHERE game='${req.query.game}' AND userName='${req.query.userName}'`;
+  
   db.query(sql, (err, result) => {
       if (err) {
         console.log(err);
@@ -150,8 +172,7 @@ app.get('/top-scores', (req, res) => {
     let userScore = result.find(score => score.userName === req.query.userName);
     sql = `SELECT COUNT(*) from scores WHERE game='${req.query.game}' AND score>'${userScore.score}'`;
     db.query(sql, (err, result2) => {
-      if (err) {
-        console.log(err);
+
         if (err) {
           console.log(err);
           return res.status(400).json({
@@ -159,11 +180,12 @@ app.get('/top-scores', (req, res) => {
             message: err.sqlMessage
           });
         }
-      }
-      
+
+    //result = result.map((m)=>(m, ))
     res.status(200).json({
       status: 'success',
-      data: {[`top ${req.query.limit}`]: result, [`${req.query.userName} place`]: result2[0]["COUNT(*)"]+1}
+      data: {'top-results': result, 'your result': {'place': result2[0]["COUNT(*)"]+1, 
+            'score': userScore.score}}
     });
   });
 })
