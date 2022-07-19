@@ -160,7 +160,10 @@ app.patch('/updateuser/:id', async (req, res) => {
 });
 
 app.all('*', (req, res, next) => {
-  next(new AppError(`Can't find ${req.originalUrl} on this server 🙄`, 404));
+  res.status(404).json({
+    status: 'Not Found',
+    data: `Can't find ${req.originalUrl} on the server`
+  });
 });
 
 app.use(globalErrorHandler);
