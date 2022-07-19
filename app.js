@@ -27,8 +27,7 @@ const createDB = () => {
 };
 
 const createUsersTable = () => {
-  let sql =
-    'CREATE TABLE Users(id int AUTO_INCREMENT, userName VARCHAR(255) UNIQUE NOT NULL, fullName VARCHAR(255) NOT NULL, PRIMARY KEY (id))';
+  let sql = 'CREATE TABLE Users(id int AUTO_INCREMENT, userName VARCHAR(255) UNIQUE NOT NULL, fullName VARCHAR(255) NOT NULL, PRIMARY KEY (id))';
 
   db.query(sql, (err, result) => {
     if (err) throw err;
@@ -37,8 +36,7 @@ const createUsersTable = () => {
 };
 
 const createTopScoresTable = () => {
-  let sql =
-    'CREATE TABLE scores(id int AUTO_INCREMENT, userName varchar(255) NOT NULL, game varchar(255) NOT NULL, score int NOT NULL, PRIMARY KEY (id), foreign key(userName) references users(userName))';
+  let sql = 'CREATE TABLE scores(id int AUTO_INCREMENT, userName varchar(255) NOT NULL, game varchar(255) NOT NULL, score int NOT NULL, PRIMARY KEY (id), foreign key(userName) references users(userName))';
 
   db.query(sql, (err, result) => {
     if (err) throw err;
