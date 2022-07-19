@@ -36,7 +36,7 @@ const createUsersTable = () => {
 };
 
 const createTopScoresTable = () => {
-  let sql = 'CREATE TABLE scores(id int AUTO_INCREMENT, userName varchar(255) NOT NULL, game varchar(255) NOT NULL, score int NOT NULL, PRIMARY KEY (id), foreign key(userName) references users(userName))';
+  let sql = ' SET FOREIGN_KEY_CHECKS=0; CREATE TABLE scores(id int AUTO_INCREMENT, userName varchar(255) NOT NULL, game varchar(255) NOT NULL, score int NOT NULL, PRIMARY KEY (id), foreign key(userName) references users(userName));';
 
   db.query(sql, (err, result) => {
     if (err) throw err;
@@ -149,8 +149,25 @@ app.get('/top-scores', async (req, res) => {
 });
 
 app.patch('/updateuser/:id', async (req, res) => {
-  let sql = `UPDATE users SET fullName = '${req.body.fullName}' WHERE id = ${req.params.id}`;
-  let result = await db.query(sql, res);
+  let sql = `SELECT user WHERE id=${req.params.id}`;
+  db.query(sql, (err, result) => {
+    if (err) {
+      return res.status(400).json({
+        message: 'User with the specified id was\'nt found',
+      });
+    }
+  });
+  console.log(user)
+
+  sql = 'SET FOREIGN_KEY_CHECKS=0;'
+  await dbQuery(sql, res);
+
+  sql = `UPDATE users SET fullName = '${req.body.fullName}', userName = '${req.body.userName}' WHERE id = ${req.params.id}`;
+  let result = await dbQuery(sql, res);
+
+  sql = 'SET FOREIGN_KEY_CHECKS=0;';
+  await dbQuery(sql, res);
+
   res.status(200).json({
     status: 'success',
     data: result
