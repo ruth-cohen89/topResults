@@ -149,15 +149,13 @@ app.get('/top-scores', async (req, res) => {
 });
 
 app.patch('/updateuser/:id', async (req, res) => {
-  let sql = `SELECT user WHERE id=${req.params.id}`;
-  db.query(sql, (err, result) => {
-    if (err) {
-      return res.status(400).json({
-        message: 'User with the specified id was\'nt found',
-      });
-    }
-  });
-  console.log(user)
+  // let sql = `SELECT user WHERE id=${req.params.id}`;
+  // db.query(sql, (err, result) => {
+  //   if (!result) {
+  //     return next(new AppError('No document found with that ID', 404));
+  //   }
+
+  // });
 
   sql = 'SET FOREIGN_KEY_CHECKS=0;'
   await dbQuery(sql, res);
@@ -165,7 +163,7 @@ app.patch('/updateuser/:id', async (req, res) => {
   sql = `UPDATE users SET fullName = '${req.body.fullName}', userName = '${req.body.userName}' WHERE id = ${req.params.id}`;
   let result = await dbQuery(sql, res);
 
-  sql = 'SET FOREIGN_KEY_CHECKS=0;';
+  sql = 'SET FOREIGN_KEY_CHECKS=1;';
   await dbQuery(sql, res);
 
   res.status(200).json({
