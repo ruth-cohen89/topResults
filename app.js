@@ -72,7 +72,7 @@ if (process.env.NODE_ENV === 'development') {
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 
-app.post('/users/adduser', async (req, res) => {
+app.post('/adduser', async (req, res) => {
   let user = { userName: req.body.userName, fullName: req.body.fullName };
   let sql = 'INSERT INTO users SET ?';
   const result = await dbQuery(sql, res, user);
@@ -85,7 +85,7 @@ app.post('/users/adduser', async (req, res) => {
   });
 });
 
-app.post('/scores/submit', async (req, res) => {
+app.post('/submit', async (req, res) => {
   let score = {
     userName: req.body.userName,
     game: req.body.game,
@@ -121,7 +121,7 @@ app.post('/scores/submit', async (req, res) => {
   });
 });
 
-app.get('/scores/top-scores', async (req, res) => {
+app.get('/top-scores', async (req, res) => {
   if (!req.query.game || !req.query.limit || !req.query.userName)
     return res.status(400).json({ message: 'Missing fields' });
   let sql = `SELECT score, userName from scores WHERE game='${req.query.game}' ORDER BY score DESC LIMIT ${req.query.limit}`;
@@ -149,13 +149,7 @@ app.get('/scores/top-scores', async (req, res) => {
   });
 });
 
-app.patch('/users/updateuser/:id', async (req, res, next) => {
-  let sql = `SELECT user WHERE id=${req.params.id}`;
-  db.query(sql, (err, result) => {
-    if (err) {
-      next(new AppError('ID does not exist!', 400));
-    }
-  });
+app.patch('/updateuser/:id', async (req, res, next) => {
 
   sql = 'SET FOREIGN_KEY_CHECKS=0;'
   await dbQuery(sql, res);
@@ -165,6 +159,8 @@ app.patch('/users/updateuser/:id', async (req, res, next) => {
 
   sql = 'SET FOREIGN_KEY_CHECKS=1;';
   await dbQuery(sql, res);
+
+  if(result.affectedRows===0) return next(new AppError('ID does not exist!', 404));
 
   res.status(200).json({
     status: 'success',
