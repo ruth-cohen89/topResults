@@ -148,14 +148,13 @@ app.get('/top-scores', async (req, res) => {
   });
 });
 
-app.patch('/updateuser/:id', async (req, res) => {
-  // let sql = `SELECT user WHERE id=${req.params.id}`;
-  // db.query(sql, (err, result) => {
-  //   if (!result) {
-  //     return next(new AppError('No document found with that ID', 404));
-  //   }
-
-  // });
+app.patch('/updateuser/:id', async (req, res, next) => {
+  let sql = `SELECT user WHERE id=${req.params.id}`;
+  db.query(sql, (err, result) => {
+    if (err) {
+      //next(new AppError('ID does not exist!', 400));
+    }
+  });
 
   sql = 'SET FOREIGN_KEY_CHECKS=0;'
   await dbQuery(sql, res);
