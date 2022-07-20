@@ -20,6 +20,7 @@ Built using: node.js, express and mySql
 * Postman - API testing
 
 <h2>How to run it?</h2>
+  
 * Clone this repository
   
 * Install dependencies using below command npm install
@@ -27,3 +28,14 @@ Built using: node.js, express and mySql
 * Create database and connection
   
 * npm start
+  
+  <h2>API Routes:</h2>
+  
+  * adduser:
+ 
+  * submit:
+  
+  * top-scores
+  
+  * updateuser
+  
