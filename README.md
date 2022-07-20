@@ -5,9 +5,9 @@
 <p align="center"><b><PROJECT_DESCRIPTION></b></p>
 </p>
 
-# <NAME_OF_PROJECT>
+# topScores
 
-Built using: node.js, express, mongoDB and mongoose
+Built using: node.js, express and mySql
 
 <h2>Built with</h2>
 
@@ -15,7 +15,15 @@ Built using: node.js, express, mongoDB and mongoose
 
 * Express - The web framework used
 
-* MySql
+* MySql - relational database management system 
 
 * Postman - API testing
 
+<h2>How to run it?</h2>
+* Clone this repository
+  
+* Install dependencies using below command npm install
+  
+* Create database and connection
+  
+* npm start
