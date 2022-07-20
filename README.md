@@ -7,7 +7,9 @@
 
 # topScores
 
-Built using: node.js, express and mySql
+REST API built using: node.js, express and mySql
+For managing top-scores and users
+  
 
 <h2>Built with</h2>
 
@@ -28,14 +30,14 @@ Built using: node.js, express and mySql
 * Create database and connection
   
 * npm start
-  
-  <h2>API Routes:</h2>
-  
-  * adduser:
- 
-  * submit:
-  
-  * top-scores
-  
-  * updateuser
+
+<h2>API Routes:</h2>
+
+* adduser:
+
+* submit:
+
+* top-scores
+
+* updateuser
   
