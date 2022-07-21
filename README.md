@@ -29,7 +29,9 @@ For managing top-scores and users
   
 * Create databases by uncomentting the following lines on app.js:
   
+  
 // createUsersTable();
+  
 // createTopScoresTable();
   
 * npm start
