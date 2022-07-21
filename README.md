@@ -27,7 +27,8 @@ For managing top-scores and users
   
 * Install dependencies using command npm i
   
-* Create databases by uncomentting the folowwing lines on app.js:
+* Create databases by uncomentting the following lines on app.js:
+  
 // createUsersTable();
 // createTopScoresTable();
   
