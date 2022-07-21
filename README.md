@@ -34,7 +34,7 @@ For managing top-scores and users
   
    createTopScoresTable();
   
-* npm start
+* Run the code using command npm start
 
 <h2>API Routes:</h2>
 
