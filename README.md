@@ -25,9 +25,11 @@ For managing top-scores and users
   
 * Clone this repository
   
-* Install dependencies using below command npm install
+* Install dependencies using command npm i
   
-* Create database and connection
+* Create databases by uncomentting the folowwing lines on app.js:
+// createUsersTable();
+// createTopScoresTable();
   
 * npm start
 
