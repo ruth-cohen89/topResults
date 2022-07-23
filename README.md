@@ -1,8 +1,8 @@
 <p align="center">
 
- <img width="350" height="140" src="https://railsware.com/blog/wp-content/uploads/2018/09/2400%D1%851260-rw-blog-node-js.png" />
+ <img width="350" height="160" src="https://railsware.com/blog/wp-content/uploads/2018/09/2400%D1%851260-rw-blog-node-js.png" />
 
- <img width="340" height="140" src="https://datasciencebiz.com/wp-content/uploads/2022/05/1_TTM5AleQfFJ-mItttJROdg.jpeg" />
+ <img width="340" height="160" src="https://datasciencebiz.com/wp-content/uploads/2022/05/1_TTM5AleQfFJ-mItttJROdg.jpeg" />
  
 </p>
 <h1 align="center">topResults</h1>
