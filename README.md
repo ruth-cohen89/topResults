@@ -38,10 +38,12 @@
 
 * adduser:
   POST http://127.0.0.1:8000/api/users/adduser
+  
   parameters: fullName, userName
 
 * submit:
   POST http://127.0.0.1:800/api/users/submit
+  
   parameters: userName, game, result
   
 * top-scores
@@ -49,5 +51,6 @@
   
 * updateuser
   UPDATE http://127.0.0.1:800/api/users/updateuser:{userId}
+  
   parameters: fullName (optional), userName (optional)
   
