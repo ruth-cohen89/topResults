@@ -37,10 +37,17 @@
 <h2>API Routes:</h2>
 
 * adduser:
+  POST http://127.0.0.1:8000/api/users/adduser
+  parameters: fullName, userName
 
 * submit:
-
+  POST http://127.0.0.1:800/api/users/submit
+  parameters: userName, game, result
+  
 * top-scores
-
+  GET http://127.0.0.1:800/api/users/submit?<NUMBER_OF_SCORES>, <NAME_OF_GAME>
+  
 * updateuser
+  UPDATE http://127.0.0.1:800/api/users/updateuser:<ID_OF_USER>
+  parameters: fullName (optional), userName (optional)
   
