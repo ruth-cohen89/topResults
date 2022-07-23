@@ -45,9 +45,9 @@
   parameters: userName, game, result
   
 * top-scores
-  GET http://127.0.0.1:800/api/users/submit?<NUMBER_OF_SCORES>, <NAME_OF_GAME>
+  GET http://127.0.0.1:800/api/users/submit?scores=<number_of_scores>,game={game}
   
 * updateuser
-  UPDATE http://127.0.0.1:800/api/users/updateuser:<ID_OF_USER>
+  UPDATE http://127.0.0.1:800/api/users/updateuser:{userId}
   parameters: fullName (optional), userName (optional)
   
