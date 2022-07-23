@@ -50,7 +50,7 @@
   
 * Top-scores
 
-  GET http://127.0.0.1:800/api/users/submit?scores=<number_of_scores>,game={game}
+  GET http://127.0.0.1:800/api/users/submit?top-scores<number_of_scores>,game={game}
   
 * Updateuser
 
