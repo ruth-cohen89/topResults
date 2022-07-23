@@ -1,6 +1,6 @@
 <p align="center">
 
- <img width="192" src="https://user-images.githubusercontent.com/57313608/170001601-2615b978-72c5-41c7-8c64-0ef79de3f659.png" />
+ <img width="192" src="https://railsware.com/blog/wp-content/uploads/2018/09/2400%D1%851260-rw-blog-node-js.png" />
 
 </p>
 <h1 align="center"><NAME_OF_PROJECT></h1>
