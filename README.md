@@ -5,8 +5,7 @@
 <p align="center"><b><PROJECT_DESCRIPTION></b></p>
 </p>
 
-# topScores
-
+# topResults
 REST API built using: node.js, express and mySql
 For managing top-scores and users
   
