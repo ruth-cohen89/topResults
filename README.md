@@ -6,7 +6,7 @@
  
 </p>
 <h1 align="center">topResults</h1>
-<p align="center"><b><h4>A REST API for managing players and scores</h4></b></p>
+<p align="center"><b><h3>A REST API for managing players and scores</h3></b></p>
 </p>
 
 <h2>Built with</h2>
