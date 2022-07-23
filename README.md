@@ -1,14 +1,14 @@
 <p align="center">
 
  <img width="460" height="240" src="https://railsware.com/blog/wp-content/uploads/2018/09/2400%D1%851260-rw-blog-node-js.png" />
-
+ <img width="460" height="240" src="https://railsware.com/blog/wp-content/uploads/2018/09/2400%D1%851260-rw-blog-node-js.png" />
+ 
 </p>
 <h1 align="center">topResults</h1>
 <p align="center"><b>A REST API for managing players and scores</b></p>
 </p>
 
 Built using: node.js, express and mySql
-For managing top-scores and users
   
 
 <h2>Built with</h2>
