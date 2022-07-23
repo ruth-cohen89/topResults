@@ -7,7 +7,7 @@
 <p align="center"><b>A REST API for managing players and scores</b></p>
 </p>
 
-REST API built using: node.js, express and mySql
+Built using: node.js, express and mySql
 For managing top-scores and users
   
 
