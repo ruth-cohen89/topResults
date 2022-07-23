@@ -1,7 +1,7 @@
 <p align="center">
 
  <img width="460" height="240" src="https://railsware.com/blog/wp-content/uploads/2018/09/2400%D1%851260-rw-blog-node-js.png" />
- <p> </p>
+
  <img width="460" height="240" src="https://datasciencebiz.com/wp-content/uploads/2022/05/1_TTM5AleQfFJ-mItttJROdg.jpeg" />
  
 </p>
