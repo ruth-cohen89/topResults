@@ -2,8 +2,8 @@ const express = require('express');
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
 const mysql = require('mysql');
-const app = express();
-
+const app = express(); 
+ 
 const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
@@ -60,6 +60,7 @@ const dbQuery = async (sql, res, data = '') => {
           message: err.sqlMessage,
         });
       }
+
       resolve(result);
     });
   });
@@ -177,6 +178,7 @@ app.all('*', (req, res, next) => {
 
 app.use(globalErrorHandler);
 
+// Uncomment to create databases
 // createUsersTable();
 // createTopScoresTable();
 module.exports = app;
