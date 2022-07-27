@@ -8,12 +8,10 @@ process.on('uncaughtException', (err) => {
 });
 
 dotenv.config({ path: './config.env' });
-// const port = process.env.PORT;
 
-//const port = '8000';
-
+const PORT = process.env.PORT || 8000;
 const server = app.listen('8000', () => {
-  console.log(`App running on port 8000...`);
+  console.log(`App running on port ${PORT}...`);
 });
 
 // Promise rejections (outside of the app)
