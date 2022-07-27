@@ -1,15 +1,15 @@
 const express = require('express');
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
-const mysql = require('mysql');
+// const mysql = require('mysql');
 const app = express(); 
  
-const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '1234',
-  database: 'top_scores',
-});
+// const db = mysql.createConnection({
+//   host: 'localhost',
+//   user: 'root',
+//   password: '1234',
+//   database: 'top_scores',
+// });
 
 db.connect((err) => {
   if (err) {
@@ -73,18 +73,18 @@ if (process.env.NODE_ENV === 'development') {
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 
-app.post('/adduser', async (req, res) => {
-  let user = { userName: req.body.userName, fullName: req.body.fullName };
-  let sql = 'INSERT INTO users SET ?';
-  const result = await dbQuery(sql, res, user);
+// app.post('/adduser', async (req, res) => {
+//   let user = { userName: req.body.userName, fullName: req.body.fullName };
+//   let sql = 'INSERT INTO users SET ?';
+//   const result = await dbQuery(sql, res, user);
 
-  res.status(201).json({
-    status: 'success',
-    data: {
-      data: result,
-    },
-  });
-});
+//   res.status(201).json({
+//     status: 'success',
+//     data: {
+//       data: result,
+//     },
+//   });
+// });
 
 app.post('/submit', async (req, res) => {
   let score = {
@@ -178,7 +178,7 @@ app.all('*', (req, res, next) => {
 
 app.use(globalErrorHandler);
 
-// Uncomment to create databases
+// Uncomment to create
 // createUsersTable();
 // createTopScoresTable();
 module.exports = app;
